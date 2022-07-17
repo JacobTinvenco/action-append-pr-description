@@ -48,7 +48,7 @@ async function main() {
     return 0;
   }
 
-  const updatedBody = `Ticket: ${url}  \n\n ----- \n ${body}`;
+  const updatedBody = `${url}  \n\n ----- \n ${body}`;
 
   const updateResponse = await octokit
     .request("PATCH /repos/{owner}/{repo}/pulls/{pull_number}", {
