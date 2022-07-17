@@ -12,9 +12,9 @@ const auth = core.getInput("auth");
 const repo = core.getInput("repo");
 const owner = core.getInput("owner");
 const pr = core.getInput("pr");
-const url = core.getInput("url");
+const text = core.getInput("text");
 
-if (!auth || !repo || !owner || !pr || !url) {
+if (!auth || !repo || !owner || !pr || !text) {
   core.setFailed("Please provide all arguments");
   return 1;
 }
@@ -43,12 +43,12 @@ async function main() {
     body = "";
   }
 
-  if (body.includes(url)) {
-    core.info("Decription already includes deployed url");
+  if (body.includes(text)) {
+    core.info("Decription already includes text");
     return 0;
   }
 
-  const updatedBody = `${url}  \n\n ----- \n ${body}`;
+  const updatedBody = `${text}  \n\n ----- \n ${body}`;
 
   const updateResponse = await octokit
     .request("PATCH /repos/{owner}/{repo}/pulls/{pull_number}", {

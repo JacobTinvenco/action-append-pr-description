@@ -16,8 +16,8 @@ inputs:
   pr:
     description: "The pr number"
     required: true
-  url:
-    description: "The output deployed url"
+  text:
+    description: "The text to be appended"
     required: true
 
 runs:
