@@ -13,7 +13,7 @@ steps:
       repo: ${{ github.event.repository.name }}
       owner: ${{ github.repository_owner }}
       pr: ${{ github.event.number }}
-      url: "https://my-url.test"
+      text: "https://my-url.test"
 ```
 
 ## Inputs
@@ -26,7 +26,7 @@ steps:
 
 - `pr` - (required) The pull request number.
 
-- `url` - (required) The url to append to the specified pull request description.
+- `text` - (required) The text to prepend to the specified pull request description.
 
 ## Outputs
 
