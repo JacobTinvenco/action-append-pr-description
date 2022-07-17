@@ -8,14 +8,14 @@ module.exports =
 const core = __nccwpck_require__(186);
 const github = __nccwpck_require__(438);
 
-const auth = core.getInput('auth');
-const repo = core.getInput('repo');
-const owner = core.getInput('owner');
-const pr = core.getInput('pr');
-const url = core.getInput('url');
+const auth = core.getInput("auth");
+const repo = core.getInput("repo");
+const owner = core.getInput("owner");
+const pr = core.getInput("pr");
+const url = core.getInput("url");
 
 if (!auth || !repo || !owner || !pr || !url) {
-  core.setFailed('Please provide all arguments');
+  core.setFailed("Please provide all arguments");
   return 1;
 }
 
@@ -23,7 +23,7 @@ const octokit = github.getOctokit(auth);
 
 async function main() {
   const data = await octokit
-    .request('GET /repos/{owner}/{repo}/pulls/{pull_number}', {
+    .request("GET /repos/{owner}/{repo}/pulls/{pull_number}", {
       owner,
       repo,
       pull_number: pr,
@@ -36,17 +36,22 @@ async function main() {
     return 1;
   }
 
-  const { body } = data;
+  let { body } = data;
+
+  if (!body) {
+    core.info("Pull request has no description, setting it to an empty string");
+    body = "";
+  }
 
   if (body.includes(url)) {
-    core.info('Decription already includes deployed url');
+    core.info("Decription already includes deployed url");
     return 0;
   }
 
-  const updatedBody = `${body} \n\n ----- \nDeployed to: ${url}`;
+  const updatedBody = `Ticket: ${url}  \n\n ----- \n ${body}`;
 
   const updateResponse = await octokit
-    .request('PATCH /repos/{owner}/{repo}/pulls/{pull_number}', {
+    .request("PATCH /repos/{owner}/{repo}/pulls/{pull_number}", {
       owner,
       repo,
       pull_number: pr,

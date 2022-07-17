@@ -18,7 +18,8 @@
   "homepage": "https://github.com/chabroA/action-append-pr-description",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0"
+    "@actions/github": "^4.0.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.27.0"
